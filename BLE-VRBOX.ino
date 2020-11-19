@@ -48,6 +48,7 @@
 // is not input only.
 
 #include "BLEDevice.h"
+#include <Arduino.h>
 
 //------ VR Box Definitions -----
 enum
