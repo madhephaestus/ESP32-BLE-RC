@@ -1,6 +1,8 @@
-#include "BLEDevice.h"
 #include <Arduino.h>
+#include <BLEScan.h>
+#include <BLEDevice.h>
 #include "BLE-RC.h"
+
 
 // this is the service UUID of the VR Control handheld mouse/joystick device (HID)
 static BLEUUID serviceUUID("00001812-0000-1000-8000-00805f9b34fb");
@@ -23,13 +25,13 @@ static BLERemoteCharacteristic* pBatRemoteCharacteristic;
 
 // pointer to a list of characteristics of the active service,
 // sorted by characteristic UUID
-std::map<std::string, BLERemoteCharacteristic*> *pmap;
+std::map<uint16_t, BLERemoteCharacteristic*>*pmap;
 std::map<std::string, BLERemoteCharacteristic*> :: iterator itr;
 
 // pointer to a list of characteristics of the active service,
 // sorted by characteristic handle
-std::map<std::uint16_t, BLERemoteCharacteristic*> *pmapbh;
-std::map<std::uint16_t, BLERemoteCharacteristic*> :: iterator itrbh;
+std::map<uint16_t, BLERemoteCharacteristic*>*pmapbh;
+std::map<uint16_t, BLERemoteCharacteristic*> :: iterator itrbh;
 
 // storage for pointers to characteristics we want to work with
 // to do: change to linked list ?
@@ -152,9 +154,8 @@ class MyClientCallback : public BLEClientCallbacks
 bool setupCharacteristics(BLERemoteService* pRemoteService, NotifyCallback pNotifyCallback)
 {
   // get all the characteristics of the service using the handle as the key
-  //pmapbh = pRemoteService->getCharacteristicsByHandle();
-    pmapbh = pRemoteService->getCharacteristicsByHandle();
-  
+  pRemoteService->getCharacteristics(pmapbh);
+
   // only interested in report characteristics that have the notify capability
   for (itrbh = pmapbh->begin(); itrbh != pmapbh->end(); itrbh++)
   {

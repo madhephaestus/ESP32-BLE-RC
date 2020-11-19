@@ -59,7 +59,7 @@
 // can be moved to any GPIO pin (except LED, that is the builtin blue LED) that
 // is not input only.
 
-#include "BLEDevice.h"
+#include <BLEDevice.h>
 #include <Arduino.h>
 
 //------ VR Box Definitions -----
