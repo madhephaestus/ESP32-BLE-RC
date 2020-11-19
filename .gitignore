@@ -3,3 +3,6 @@ core
 .cproject
 .project
 spec.d
+/Release/
+/sloeber.ino.cpp
+libraries
